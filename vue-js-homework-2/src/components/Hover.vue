@@ -8,14 +8,15 @@ defineProps({
 
 const hover = ref("");
 const isVisible = ref(false);
-
-function toggle() {
-    isVisible.value = !isVisible.value;
-}
 </script>
 
 <template>
-    <p @mouseover="hover = 'highlight'" @mouseleave="hover = ''" :class="hover" @click="toggle">{{ obj.name }}</p>
+    <p @mouseover="hover = 'highlight'" 
+        @mouseleave="hover = ''" 
+        :class="hover" 
+        @click="isVisible = !isVisible">
+            {{ obj.name }}
+    </p>
     <Info :obj="obj" v-show="isVisible"/>
 </template>
 
