@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-defineProps({
+const prop = defineProps({
   product: {
     id: Number,
     title: String,
@@ -15,6 +15,11 @@ defineProps({
     },
   },
 });
+
+const title = computed(() => prop.product.title.length < 30 ? 
+                          prop.product.title : prop.product.title.slice(0, 30) + "...");
+const description = computed(() => prop.product.description.length < 90 ? 
+                                prop.product.description : prop.product.description.slice(0, 90) + "...");
 </script>
 
 <template>
@@ -26,7 +31,7 @@ defineProps({
       </p>
       <p>
         <b>
-          {{ product.title.length < 30 ? product.title : product.title.slice(0, 30) + "..." }}
+          {{ title }}
         </b>
       </p>
       <p>
@@ -34,7 +39,7 @@ defineProps({
         <small>{{ product.rating.count }} оценок</small>
       </p>
       <p>
-        {{ product.description.length < 90 ? product.description : product.description.slice(0, 90) + "..."}}
+        {{ description }}
       </p>
       <p>
         <small :style="product.category === 'jewelery' ? 'margin-left: 2px' : '' ">

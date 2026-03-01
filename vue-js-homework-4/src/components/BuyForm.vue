@@ -38,11 +38,11 @@ function close(){
 
 <template> 
 <DeliveryForm class="glass"
-                :style="buyId === -1 || deliveryRes ? 'display:none' : ''" 
+                v-show="!(buyId === -1 || deliveryRes)"
                 :buyId="id" 
                 @submited="(e) => deliveryRes = e" />
 <CardForm class="glass"
-            :style="deliveryRes && !cardRes ? '' :  'display:none'" 
+            v-show="deliveryRes && !cardRes"
             @submited="(e) => {cardRes = e; postForm(deliveryRes, e)}" />
 <div class="glass"
     :style="cardRes ? '' :  'display:none'" >

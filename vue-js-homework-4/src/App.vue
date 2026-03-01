@@ -13,24 +13,24 @@ fetch("/products.json")
   .then((products) => data.value = products);
 
 function checkProductInfo(info, searchTerm){
-  const check = info.toLowerCase().includes(searchTerm.value.toLowerCase());
+  const check = info.toLowerCase().includes(searchTerm.toLowerCase());
   return check;
 }
 
 function checkProductPrice(price, from, to){
-  const check = from.value <= price && price <= to.value;
+  const check = from <= price && price <= to;
   return check;
 }
 
-const searchTerm = ref("");
-const priceFrom = ref(0);
-const priceTo = ref(1000000);
-const filter = ref([searchTerm, priceFrom, priceTo]);
+const filter = ref({'searchTerm': "", 
+                    'priceFrom': 0, 
+                    'priceTo': 1000000});
 
-const products = computed(() => data.value.filter(product => (checkProductInfo(product.title, filter.value[0]) ||
-                                                  checkProductInfo(product.description, filter.value[0]) ||
-                                                  checkProductInfo(product.category, filter.value[0])) &&
-                                                  checkProductPrice(product.price, filter.value[1], filter.value[2])));
+const checkomg = computed(() => console.log(filter.value.searchTerm));
+const products = computed(() => data.value.filter(product => (checkProductInfo(product.title, filter.value.searchTerm) ||
+                                                  checkProductInfo(product.description, filter.value.searchTerm) ||
+                                                  checkProductInfo(product.category, filter.value.searchTerm)) &&
+                                                  checkProductPrice(product.price, filter.value.priceFrom, filter.value.priceTo)));
 
 const isNewProduct = ref(false);
 
@@ -44,7 +44,7 @@ const lastId = computed(() => data.value.length ? data.value.at(-1).id : 0);
   <BuyForm :buyId="buyId" 
             @bought="() => buyId = -1"/>
   <NewProductForm :lastId="lastId"
-                  :style="isNewProduct ? '' : 'display:none'"
+                  v-show="isNewProduct"
                   @submited="(e) => {data.push(e); isNewProduct = false;}"/>
   <button style="width: 95%;"
           @click="isNewProduct = true">Добавить новый товар</button>
