@@ -8,7 +8,9 @@ const priceFrom = ref(0);
 const priceTo = ref(1000000);
 
 function search() {
-  emit('search', [searchTerm, priceFrom, priceTo]);
+  emit('search', {'searchTerm': searchTerm, 
+                    'priceFrom': priceFrom, 
+                    'priceTo': priceTo});
 }
 </script>
 
