@@ -26,7 +26,6 @@ const filter = ref({'searchTerm': "",
                     'priceFrom': 0, 
                     'priceTo': 1000000});
 
-const checkomg = computed(() => console.log(filter.value.searchTerm));
 const products = computed(() => data.value.filter(product => (checkProductInfo(product.title, filter.value.searchTerm) ||
                                                   checkProductInfo(product.description, filter.value.searchTerm) ||
                                                   checkProductInfo(product.category, filter.value.searchTerm)) &&
